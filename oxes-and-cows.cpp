@@ -1,75 +1,23 @@
 #include <iostream>
-#include <cstdlib>
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
 #include <cmath>
+#include <string>
 
 using namespace std;
-
-class MyNumber
-{
-private:
-    int number, digitsNumber;
-public:
-    MyNumber(int Number);
-    int* asArray();
-    int getDigitsNumber();
-    bool lengthIs(int length);
-    ~MyNumber();
-};
-
-MyNumber::MyNumber(int Number)
-{
-    number = Number;
-    int i = 0;
-    while(Number > 0) {
-        Number /= 10;
-        i++;
-    }
-    digitsNumber = i;
-};
-
-int* MyNumber::asArray()
-{
-    int i = digitsNumber - 1;
-    int Number = number, arrayNum[digitsNumber];
-    while(Number > 0) {
-        arrayNum[i] = Number % 10;
-        Number /= 10;
-        i--;
-    }
-    return arrayNum;
-}
-
-bool MyNumber::lengthIs(int length)
-{
-    return length == digitsNumber;
-}
-
-int MyNumber::getDigitsNumber() {
-    return digitsNumber;
-}
-
-MyNumber::~MyNumber()
-{
-}
 
 int main() {
     int numberOfDigits = 4, numberOfDigitsPow, numOfTryings = 0, i, theNumber;
     cout << "Choose the level - number of digits! = ";
     cin >> numberOfDigits;
-    int theNumberArray[numberOfDigits];
 
     numberOfDigitsPow = pow(10, numberOfDigits);
+    srand (time(NULL));
     theNumber = rand() % numberOfDigitsPow;
 
-    cout << "theNumber = " << theNumber << "\n";
+    string theStringNumber = to_string(theNumber);
 
-    int Number = theNumber;
-    i = numberOfDigits - 1;
-    while(Number > 0) {
-        theNumberArray[i] = Number % 10;
-        Number /= 10;
-        i--;
-    }
+    cout << "theNumber = " + theStringNumber + "\n";
 
     //for (int i = numberOfDigits - 1; i >= 0; i--) cout << i << " - " << theNumberArray[i] << "\n";
     cout << "\n Okay, I got the number. Now start to guess it. Good luck! \n";
@@ -80,24 +28,23 @@ int main() {
     while (didWin == false) {
         cout << "Your number = ";
         cin >> guessNum;
-        MyNumber guessedNumber(guessNum);
+
+        string guessedStringNum = to_string(guessNum);
 
 
         // First step - check if number have right digits number
 
-        if (guessedNumber.getDigitsNumber() == numberOfDigits) {
+        if (guessedStringNum.length() == numberOfDigits) {
 
             // Second step - check if the users number is even to guessed number
 
-            if (guessNum == theNumber) {//win
+            if (guessedStringNum == theStringNumber) {//win
                 didWin = true;
                 cout << "Congratulations!! You won!! \n";
             } else {
 
                 // Here check for oxes and cows
-                int* guessedNumberArray;
-                guessedNumberArray = guessedNumber.asArray();
-                for (int i = guessedNumber.getDigitsNumber() - 1; i >= 0; i--) cout << i << " - " << guessedNumberArray[i] << "\n";
+                // for (int i = guessedStringNum.length() - 1; i >= 0; i--) cout << i << " - " << guessedStringNum[i] << "\n";
 
                 cout << "Try again \n";
 
