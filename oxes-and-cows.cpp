@@ -11,9 +11,9 @@ int main() {
     cout << "Choose the level - number of digits! = ";
     cin >> numberOfDigits;
 
-    numberOfDigitsPow = pow(10, numberOfDigits);
+    numberOfDigitsPow = pow(10, numberOfDigits-1);
     srand (time(NULL));
-    theNumber = rand() % numberOfDigitsPow;
+    theNumber = rand() % numberOfDigitsPow + pow(10, numberOfDigits-1);
 
     string theStringNumber = to_string(theNumber);
 
@@ -26,6 +26,7 @@ int main() {
     int guessNum;
 
     while (didWin == false) {
+        string theStringNumberCopy = theStringNumber;
         cout << "Your number = ";
         cin >> guessNum;
 
@@ -44,14 +45,32 @@ int main() {
             } else {
 
                 // Here check for oxes and cows
-                // for (int i = guessedStringNum.length() - 1; i >= 0; i--) cout << i << " - " << guessedStringNum[i] << "\n";
 
+                int oxes = 0, cows = 0;
+                // Oxe means that one digit of users number exists on guessed number
+                // Cow means that one digit of users number exists on guessed number but stays in a wrong place
+
+                for (int i = 0; i < guessedStringNum.length(); i++) {
+                    for (int y = 0; y < theStringNumberCopy.length(); y++) {
+                        if (guessedStringNum[i] == theStringNumberCopy[y]) {
+                            if (i == y) {
+                                oxes++;
+                            } else {
+                                cows++;
+                            }
+                            theStringNumberCopy[y] = 'c'; // c - means that we already find this
+                            cout << theStringNumberCopy << "\n";
+                        }
+                    }
+                }
+
+                cout << "There is " << oxes << " oxes and " << cows << " cows. ";
                 cout << "Try again \n";
 
             }
 
         } else {
-            cout << "Digits number not equal. Try Again. \n";
+            cout << "Digits number not equal. Try Again. ";
         }
     }
 
