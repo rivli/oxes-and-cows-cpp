@@ -17,13 +17,14 @@ int main() {
 
     string theStringNumber = to_string(theNumber);
 
-    cout << "theNumber = " + theStringNumber + "\n";
+    //cout << "theNumber = " + theStringNumber + "\n";
 
     //for (int i = numberOfDigits - 1; i >= 0; i--) cout << i << " - " << theNumberArray[i] << "\n";
     cout << "\n Okay, I got the number. Now start to guess it. Good luck! \n";
 
     bool didWin = false;
     int guessNum;
+    int attemptsCounter=0;
 
     while (didWin == false) {
         string theStringNumberCopy = theStringNumber;
@@ -42,6 +43,7 @@ int main() {
             if (guessedStringNum == theStringNumber) {//win
                 didWin = true;
                 cout << "Congratulations!! You won!! \n";
+                cout << "Attempts - " << attemptsCounter << "\n";
             } else {
 
                 // Here check for oxes and cows
@@ -59,7 +61,7 @@ int main() {
                                 cows++;
                             }
                             theStringNumberCopy[y] = 'c'; // c - means that we already find this
-                            cout << theStringNumberCopy << "\n";
+                            //cout << theStringNumberCopy << "\n";
                         }
                     }
                 }
@@ -72,6 +74,8 @@ int main() {
         } else {
             cout << "Digits number not equal. Try Again. ";
         }
+
+        attemptsCounter++;
     }
 
     return 0;
